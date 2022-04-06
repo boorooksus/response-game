@@ -22,7 +22,7 @@ const MediumMode = (props: MediumModeProps) => {
       if (props.target === idx) {
         let nextTarget = -1;
         while (nextTarget === -1 || nextTarget === props.target) {
-          nextTarget = Math.floor(Math.random() * 4);
+          nextTarget = Math.floor(Math.random() * 9);
         }
         props.setTarget(nextTarget);
         props.setTryCnt(props.tryCnt - 1);
@@ -46,62 +46,64 @@ const MediumMode = (props: MediumModeProps) => {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-x-0 max-w-md">
-      {tiles.map((tile) => {
-        return (
-          <div key={tile}>
-            {
+    <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      <div className="grid grid-cols-3 gap-x-0 max-w-md">
+        {tiles.map((tile) => {
+          return (
+            <div key={tile}>
               {
-                ready: (
-                  <div
-                    className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"
-                    id={String(tile)}
-                    onClick={(e) => {
-                      onClickTile(parseInt(e.currentTarget.id));
-                    }}
-                  ></div>
-                ),
-                playing:
-                  props.target === tile ? (
+                {
+                  ready: (
                     <div
-                      className="aspect-square flex justify-center max-w-md bg-red-300 border-solid border-2 border-white"
-                      id={String(tile)}
-                      onClick={(e) => {
-                        onClickTile(parseInt(e.currentTarget.id));
-                      }}
-                    ></div>
-                  ) : (
-                    <div
-                      className="aspect-square flex justify-center max-w-md bg-gray-300 border-solid border-2 border-white"
+                      className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"
                       id={String(tile)}
                       onClick={(e) => {
                         onClickTile(parseInt(e.currentTarget.id));
                       }}
                     ></div>
                   ),
-                success: (
-                  <div
-                    className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2 "
-                    id={String(tile)}
-                    onClick={(e) => {
-                      onClickTile(parseInt(e.currentTarget.id));
-                    }}
-                  ></div>
-                ),
-                fail: (
-                  <div
-                    className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"
-                    id={String(tile)}
-                    onClick={(e) => {
-                      onClickTile(parseInt(e.currentTarget.id));
-                    }}
-                  ></div>
-                ),
-              }[props.status]
-            }
-          </div>
-        );
-      })}
+                  playing:
+                    props.target === tile ? (
+                      <div
+                        className="aspect-square flex justify-center max-w-md bg-red-300 border-solid border-2 border-white"
+                        id={String(tile)}
+                        onClick={(e) => {
+                          onClickTile(parseInt(e.currentTarget.id));
+                        }}
+                      ></div>
+                    ) : (
+                      <div
+                        className="aspect-square flex justify-center max-w-md bg-gray-300 border-solid border-2 border-white"
+                        id={String(tile)}
+                        onClick={(e) => {
+                          onClickTile(parseInt(e.currentTarget.id));
+                        }}
+                      ></div>
+                    ),
+                  success: (
+                    <div
+                      className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2 "
+                      id={String(tile)}
+                      onClick={(e) => {
+                        onClickTile(parseInt(e.currentTarget.id));
+                      }}
+                    ></div>
+                  ),
+                  fail: (
+                    <div
+                      className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"
+                      id={String(tile)}
+                      onClick={(e) => {
+                        onClickTile(parseInt(e.currentTarget.id));
+                      }}
+                    ></div>
+                  ),
+                }[props.status]
+              }
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

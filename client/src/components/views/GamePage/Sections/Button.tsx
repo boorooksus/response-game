@@ -14,6 +14,13 @@ type ButtonProps = {
   timeout: React.MutableRefObject<number | null>;
   startTime: React.MutableRefObject<number>;
   setResult: React.Dispatch<React.SetStateAction<number[]>>;
+  level: string;
+  Color: number;
+  setColor: React.Dispatch<React.SetStateAction<number>>;
+  Text: number;
+  setText: React.Dispatch<React.SetStateAction<number>>;
+  Fake: number;
+  setFake: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const Button = (props: ButtonProps) => {
@@ -25,10 +32,29 @@ const Button = (props: ButtonProps) => {
             <button
               onClick={() => {
                 props.setTarget(-1);
+                props.setFake(-1);
+                props.setColor(-1);
+                props.setText(-1);
                 props.setStatus("playing");
                 props.timeout.current = window.setTimeout(() => {
                   props.startTime.current = new Date().getTime();
-                  props.setTarget(Math.floor(Math.random() * 4));
+                  if (props.level === "Easy") {
+                    props.setTarget(Math.floor(Math.random() * 4));
+                  } else if (props.level === "Medium") {
+                    props.setTarget(Math.floor(Math.random() * 9));
+                  } else {
+                    let nextTarget = Math.floor(Math.random() * 9);
+                    props.setTarget(nextTarget);
+                    let nextFake = -1;
+                    let nextText = -1;
+                    while (nextFake === -1 || nextFake === nextTarget) {
+                      nextFake = Math.floor(Math.random() * 9);
+                    }
+                    props.setFake(nextFake);
+                    let nextColor = Math.floor(Math.random() * 3);
+                    props.setColor(nextColor);
+                    props.setText(nextColor + 1);
+                  }
                 }, Math.floor(Math.random() * 1000) + 1000);
               }}
               type="button"
