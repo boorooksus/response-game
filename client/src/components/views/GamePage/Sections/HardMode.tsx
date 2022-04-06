@@ -66,6 +66,9 @@ const HardMode = (props: HardModeProps) => {
       } else {
         clearTimeout(props.timeout.current!);
         props.setStatus("fail");
+        props.setText(-1);
+        props.setColor(-1);
+        props.setTryCnt(9);
       }
     }
   }
@@ -77,7 +80,7 @@ const HardMode = (props: HardModeProps) => {
           {colors[props.Text].toUpperCase()}
         </h3>
       ) : (
-        <h3 className="text-5xl m-2">-</h3>
+        <h3 className="text-5xl m-2 text-white">-</h3>
       )}
       <div className="grid grid-cols-3 gap-x-0 max-w-md">
         {tiles.map((tile) => {

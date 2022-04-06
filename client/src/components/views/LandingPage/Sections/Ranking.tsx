@@ -1,11 +1,11 @@
 import * as React from "react";
 
-const tableHeaders = ["Difficulty", "Ranking", "Name", "Score"];
+const tableHeaders = ["Difficulty", "Ranking", "Name", "Time(ms)"];
 
 const rankers = [
-  { level: "hard", ranking: "1st", name: "user1", score: 100 },
-  { level: "medium", ranking: "1st", name: "user2", score: 100 },
-  { level: "easy", ranking: "1st", name: "user3", score: 100 },
+  { level: "hard", ranking: "1st", name: "user1", time: 1192.2 },
+  { level: "medium", ranking: "1st", name: "user2", time: 1215.6 },
+  { level: "easy", ranking: "1st", name: "user3", time: 2033.8 },
 ];
 
 const Table = () => {

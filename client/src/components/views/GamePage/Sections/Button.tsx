@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const buttonInfos = [
   { color: "blue", text: " start game" },
@@ -31,6 +31,13 @@ const Button = (props: ButtonProps) => {
           ready: (
             <button
               onClick={() => {
+                props.setTryCnt(
+                  {
+                    Easy: 4,
+                    Medium: 6,
+                    Hard: 9,
+                  }[props.level!]!
+                );
                 props.setTarget(-1);
                 props.setFake(-1);
                 props.setColor(-1);
@@ -66,7 +73,6 @@ const Button = (props: ButtonProps) => {
           playing: (
             <button
               onClick={() => {
-                props.setTryCnt(4);
                 props.setResult([]);
                 props.setTarget(-1);
                 props.setStatus("ready");
@@ -80,7 +86,6 @@ const Button = (props: ButtonProps) => {
           fail: (
             <button
               onClick={() => {
-                props.setTryCnt(4);
                 props.setResult([]);
                 props.setTarget(-1);
                 props.setStatus("ready");
@@ -94,7 +99,6 @@ const Button = (props: ButtonProps) => {
           success: (
             <button
               onClick={() => {
-                props.setTryCnt(4);
                 props.setResult([]);
                 props.setTarget(-1);
                 props.setStatus("ready");
