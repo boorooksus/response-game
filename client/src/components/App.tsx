@@ -11,7 +11,7 @@ export default function App() {
       <div style={{ width: "80%", margin: "3rem auto" }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/game" element={<GamePage />} />
+          <Route path="/game/:level" element={<GamePage />} />
         </Routes>
       </div>
     </div>
