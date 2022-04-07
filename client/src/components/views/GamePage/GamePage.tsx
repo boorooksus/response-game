@@ -140,7 +140,7 @@ const GamePage = () => {
                   <h5 className="text-green-500 text-3xl mb-2">SUCCESS!</h5>
                   <br></br>
                   <h5 className="text-gray-700 text-2xl mb-2">평균 클릭 시간: </h5>
-                  <h5 className="text-gray-700 text-3xl mb-2">{Result.length > 0 && Result.reduce((a, c) => a + c) / Result.length} ms</h5>
+                  <h5 className="text-gray-700 text-3xl mb-2">{Result.length > 0 && Math.floor(Result.reduce((a, c) => a + c) / Result.length)} ms</h5>
                 </div>
               ),
               fail: (

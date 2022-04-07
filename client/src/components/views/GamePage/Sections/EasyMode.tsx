@@ -34,7 +34,6 @@ const EasyMode = (props: EasyModeProps) => {
 
         if (props.tryCnt === 0) {
           props.setStatus("success");
-          console.log(`avg result: ${props.result.reduce((a, c) => a + c) / props.result.length}ms`);
         }
       } else {
         console.log("fail");

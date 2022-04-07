@@ -25,3 +25,5 @@ yarn-error.log*
 db_account.js
 node_modules
 
+dev.js
+prod.js
