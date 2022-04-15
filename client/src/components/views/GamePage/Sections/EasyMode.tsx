@@ -1,52 +1,39 @@
 import * as React from "react";
+import { Dispatch, FunctionComponent } from "react";
+import { SET_STATUS, SET_TABLE } from "../GamePage";
 
-type EasyModeProps = {
+interface Props {
   status: string;
   target: number;
-  setTarget: React.Dispatch<React.SetStateAction<number>>;
-  setTryCnt: React.Dispatch<React.SetStateAction<number>>;
   tryCnt: number;
-  endTime: React.MutableRefObject<number>;
-  startTime: React.MutableRefObject<number>;
-  setResult: React.Dispatch<React.SetStateAction<number[]>>;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
-  result: number[];
-  timeout: React.MutableRefObject<number | null>;
-};
+  dispatch: Dispatch<any>;
+}
 
-const EasyMode = (props: EasyModeProps) => {
-  const tiles = [0, 1, 2, 3];
+const EasyMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch }) => {
+  const tiles = Array.from({ length: 9 }, (v, i) => i);
 
   function onClickTile(idx: number) {
-    if (props.status === "playing") {
-      if (props.target === idx) {
+    if (status === "playing") {
+      if (target === idx) {
         let nextTarget = -1;
-        while (nextTarget === -1 || nextTarget === props.target) {
-          nextTarget = Math.floor(Math.random() * 4);
+        while (nextTarget === -1 || nextTarget === target) {
+          nextTarget = Math.floor(Math.random() * 9);
         }
-        props.setTarget(nextTarget);
-        props.setTryCnt(props.tryCnt - 1);
 
-        props.endTime.current = new Date().getTime();
-        props.setResult((prevResult) => {
-          return [...prevResult, props.endTime.current - props.startTime.current];
-        });
+        dispatch({ type: SET_TABLE, target: nextTarget, tryCnt: tryCnt - 1 });
 
-        if (props.tryCnt === 0) {
-          props.setStatus("success");
+        if (tryCnt === 0) {
+          dispatch({ type: SET_STATUS, status: "success" });
         }
       } else {
-        console.log("fail");
-        clearTimeout(props.timeout.current!);
-
-        props.setStatus("fail");
+        dispatch({ type: SET_STATUS, status: "fail" });
       }
     }
   }
 
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-      <div className="grid grid-cols-2 gap-x-0 max-w-md">
+      <div className="grid grid-cols-3 gap-x-0 max-w-md">
         {tiles.map((tile) => {
           return (
             <div key={tile}>
@@ -62,7 +49,7 @@ const EasyMode = (props: EasyModeProps) => {
                     ></div>
                   ),
                   playing:
-                    props.target === tile ? (
+                    target === tile ? (
                       <div
                         className="aspect-square flex justify-center max-w-md bg-red-300 border-solid border-2 border-white"
                         id={String(tile)}
@@ -97,7 +84,7 @@ const EasyMode = (props: EasyModeProps) => {
                       }}
                     ></div>
                   ),
-                }[props.status]
+                }[status]
               }
             </div>
           );

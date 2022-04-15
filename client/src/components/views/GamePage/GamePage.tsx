@@ -89,10 +89,13 @@ const GamePage = () => {
 
   useEffect(() => {
     if (status === "playing") {
-      startTime.current = new Date().getMilliseconds();
+      startTime.current = new Date().getTime();
     } else if (status === "success") {
-      endTime.current = new Date().getMilliseconds();
+      endTime.current = new Date().getTime();
       setResult(endTime.current - startTime.current);
+      // console.log("res: ", result);
+      // console.log("start: ", startTime.current);
+      // console.log("end: ", endTime.current);
     }
   }, [status]);
 
@@ -101,9 +104,17 @@ const GamePage = () => {
       <div>
         {
           {
-            // easy: <EasyMode status={status} target={target} tryCnt={tryCnt} dispatch={dispatch} />,
+            easy: (
+              <div>
+                <EasyMode status={status} target={target} tryCnt={tryCnt} dispatch={dispatch} />
+              </div>
+            ),
             medium: <MediumMode status={status} target={target} tryCnt={tryCnt} dispatch={dispatch} />,
-            // hard: <HardMode status={status} target={target} fake={fake} color={color} text={text} tryCnt={tryCnt} dispatch={dispatch} />,
+            hard: (
+              <div>
+                <HardMode status={status} target={target} fake={fake} color={color} text={text} tryCnt={tryCnt} dispatch={dispatch} />
+              </div>
+            ),
           }[level!]
         }
       </div>

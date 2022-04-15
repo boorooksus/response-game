@@ -13,8 +13,6 @@ const MediumMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch
   const tiles = Array.from({ length: 9 }, (v, i) => i);
 
   function onClickTile(idx: number) {
-    console.log("tryCnt: ", tryCnt);
-
     if (status === "playing") {
       if (target === idx) {
         let nextTarget = -1;
