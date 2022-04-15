@@ -2,14 +2,13 @@ import * as React from "react";
 
 type LevelInfoType = {
   level: string;
-  url: string;
   color: string;
 };
 
 const levelInfos: LevelInfoType[] = [
-  { level: "Easy", url: "/game/easy", color: "bg-sky-100" },
-  { level: "Medium", url: "/game/medium", color: "bg-green-100" },
-  { level: "Hard", url: "/game/hard", color: "bg-red-100" },
+  { level: "easy", color: "bg-sky-100" },
+  { level: "medium", color: "bg-green-100" },
+  { level: "hard", color: "bg-red-100" },
 ];
 
 type CardProps = {

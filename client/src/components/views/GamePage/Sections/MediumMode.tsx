@@ -1,46 +1,34 @@
 import * as React from "react";
+import { Dispatch, FunctionComponent } from "react";
+import { SET_STATUS, SET_TABLE } from "../GamePage";
 
-type MediumModeProps = {
+interface Props {
   status: string;
   target: number;
-  setTarget: React.Dispatch<React.SetStateAction<number>>;
-  setTryCnt: React.Dispatch<React.SetStateAction<number>>;
   tryCnt: number;
-  endTime: React.MutableRefObject<number>;
-  startTime: React.MutableRefObject<number>;
-  setResult: React.Dispatch<React.SetStateAction<number[]>>;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
-  result: number[];
-  timeout: React.MutableRefObject<number | null>;
-};
+  dispatch: Dispatch<any>;
+}
 
-const MediumMode = (props: MediumModeProps) => {
+const MediumMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch }) => {
   const tiles = Array.from({ length: 9 }, (v, i) => i);
 
   function onClickTile(idx: number) {
-    if (props.status === "playing") {
-      if (props.target === idx) {
+    console.log("tryCnt: ", tryCnt);
+
+    if (status === "playing") {
+      if (target === idx) {
         let nextTarget = -1;
-        while (nextTarget === -1 || nextTarget === props.target) {
+        while (nextTarget === -1 || nextTarget === target) {
           nextTarget = Math.floor(Math.random() * 9);
         }
-        props.setTarget(nextTarget);
-        props.setTryCnt(props.tryCnt - 1);
 
-        props.endTime.current = new Date().getTime();
-        props.setResult((prevResult) => {
-          return [...prevResult, props.endTime.current - props.startTime.current];
-        });
+        dispatch({ type: SET_TABLE, target: nextTarget, tryCnt: tryCnt - 1 });
 
-        if (props.tryCnt === 0) {
-          props.setStatus("success");
-          console.log(`avg result: ${props.result.reduce((a, c) => a + c) / props.result.length}ms`);
+        if (tryCnt === 0) {
+          dispatch({ type: SET_STATUS, status: "success" });
         }
       } else {
-        console.log("fail");
-        clearTimeout(props.timeout.current!);
-
-        props.setStatus("fail");
+        dispatch({ type: SET_STATUS, status: "fail" });
       }
     }
   }
@@ -63,7 +51,7 @@ const MediumMode = (props: MediumModeProps) => {
                     ></div>
                   ),
                   playing:
-                    props.target === tile ? (
+                    target === tile ? (
                       <div
                         className="aspect-square flex justify-center max-w-md bg-red-300 border-solid border-2 border-white"
                         id={String(tile)}
@@ -98,7 +86,7 @@ const MediumMode = (props: MediumModeProps) => {
                       }}
                     ></div>
                   ),
-                }[props.status]
+                }[status]
               }
             </div>
           );

@@ -1,29 +1,27 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect, Dispatch, FunctionComponent } from "react";
+import { SET_STATUS, SET_TABLE } from "../GamePage";
 
 const buttonInfos = [
   { color: "blue", text: " start game" },
   { color: "gray", text: "restart" },
 ];
+const colors = ["red", "green", "blue", "yellow", "purple", "pink"];
 
-type ButtonProps = {
+interface Props {
   status: string;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
-  setTarget: React.Dispatch<React.SetStateAction<number>>;
-  setTryCnt: React.Dispatch<React.SetStateAction<number>>;
-  timeout: React.MutableRefObject<number | null>;
-  startTime: React.MutableRefObject<number>;
-  setResult: React.Dispatch<React.SetStateAction<number[]>>;
+  target: number;
+  fake: number;
+  color: string;
+  text: string;
+  dispatch: Dispatch<any>;
+  tryCnt: number;
   level: string;
-  Color: number;
-  setColor: React.Dispatch<React.SetStateAction<number>>;
-  Text: number;
-  setText: React.Dispatch<React.SetStateAction<number>>;
-  Fake: number;
-  setFake: React.Dispatch<React.SetStateAction<number>>;
-};
+}
 
-const Button = (props: ButtonProps) => {
+const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, tryCnt, dispatch, level }) => {
+  const timeout = useRef<number | null>(null);
+
   return (
     <div>
       {
@@ -31,38 +29,29 @@ const Button = (props: ButtonProps) => {
           ready: (
             <button
               onClick={() => {
-                props.setTryCnt(
-                  {
-                    Easy: 4,
-                    Medium: 6,
-                    Hard: 9,
-                  }[props.level!]!
-                );
-                props.setTarget(-1);
-                props.setFake(-1);
-                props.setColor(-1);
-                props.setText(-1);
-                props.setStatus("playing");
-                props.timeout.current = window.setTimeout(() => {
-                  props.startTime.current = new Date().getTime();
-                  if (props.level === "Easy") {
-                    props.setTarget(Math.floor(Math.random() * 4));
-                  } else if (props.level === "Medium") {
-                    props.setTarget(Math.floor(Math.random() * 9));
-                  } else {
-                    let nextTarget = Math.floor(Math.random() * 9);
-                    props.setTarget(nextTarget);
-                    let nextFake = -1;
-                    let nextText = -1;
-                    while (nextFake === -1 || nextFake === nextTarget) {
-                      nextFake = Math.floor(Math.random() * 9);
-                    }
-                    props.setFake(nextFake);
-                    let nextColor = Math.floor(Math.random() * 3);
-                    props.setColor(nextColor);
-                    props.setText(nextColor + 1);
+                dispatch({ type: SET_STATUS, status: "playing" });
+
+                let target = -1,
+                  fake = -1,
+                  text = "",
+                  color = "";
+                if (level === "easy") {
+                  target = Math.floor(Math.random() * 4);
+                } else if (level === "medium") {
+                  target = Math.floor(Math.random() * 9);
+                } else {
+                  target = Math.floor(Math.random() * 9);
+                  while (fake === -1 || fake === target) {
+                    fake = Math.floor(Math.random() * 9);
+                    text = colors[Math.floor(Math.random() * colors.length)];
+                    color = colors[Math.floor(Math.random() * colors.length)];
                   }
-                }, Math.floor(Math.random() * 1000) + 1000);
+                }
+                dispatch({ type: SET_TABLE, target: target, fake: fake, text: text, color: color, tryCnt: { easy: 4, medium: 6, hard: 9 }[level!] });
+
+                // timeout.current = window.setTimeout(() => {
+
+                // }, Math.floor(Math.random() * 1000) + 1000);
               }}
               type="button"
               className={`block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out`}
@@ -73,9 +62,7 @@ const Button = (props: ButtonProps) => {
           playing: (
             <button
               onClick={() => {
-                props.setResult([]);
-                props.setTarget(-1);
-                props.setStatus("ready");
+                dispatch({ type: SET_STATUS, status: "ready" });
               }}
               type="button"
               className={`block px-6 py-2.5 bg-orange-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-orange-700 hover:shadow-lg focus:bg-orange-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-800 active:shadow-lg transition duration-150 ease-in-out`}
@@ -86,9 +73,7 @@ const Button = (props: ButtonProps) => {
           fail: (
             <button
               onClick={() => {
-                props.setResult([]);
-                props.setTarget(-1);
-                props.setStatus("ready");
+                dispatch({ type: SET_STATUS, status: "ready" });
               }}
               type="button"
               className={`block px-6 py-2.5 bg-orange-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-orange-700 hover:shadow-lg focus:bg-orange-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-800 active:shadow-lg transition duration-150 ease-in-out`}
@@ -99,9 +84,7 @@ const Button = (props: ButtonProps) => {
           success: (
             <button
               onClick={() => {
-                props.setResult([]);
-                props.setTarget(-1);
-                props.setStatus("ready");
+                dispatch({ type: SET_STATUS, status: "ready" });
               }}
               type="button"
               className={`block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out`}
@@ -109,7 +92,7 @@ const Button = (props: ButtonProps) => {
               reset
             </button>
           ),
-        }[props.status]
+        }[status]
       }
     </div>
   );

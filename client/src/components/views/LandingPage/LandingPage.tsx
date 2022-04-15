@@ -5,11 +5,11 @@ import Ranking from "./Sections/Ranking";
 import LevelCards from "./Sections/LevelCards";
 
 const LandingPage = () => {
-  useEffect(() => {
-    axios.get("/api/hello").then((response) => {
-      console.log(response);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("/api/hello").then((response) => {
+  //     console.log(response);
+  //   });
+  // }, []);
 
   return (
     <>

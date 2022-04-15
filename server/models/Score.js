@@ -36,4 +36,4 @@ const productSchema = mongoose.Schema(
 
 const Score = mongoose.model("Score", productSchema);
 
-module.exports = { Product };
+module.exports = { Score };
