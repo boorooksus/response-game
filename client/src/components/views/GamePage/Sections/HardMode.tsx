@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Dispatch, FunctionComponent } from "react";
-import { SET_STATUS, SET_TABLE } from "../GamePage";
+import { SET_STATUS, SET_TABLE } from "../types";
 
 interface Props {
   status: string;

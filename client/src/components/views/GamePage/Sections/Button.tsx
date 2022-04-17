@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useRef, useEffect, Dispatch, FunctionComponent } from "react";
-import { SET_STATUS, SET_TABLE } from "../GamePage";
+import { SET_STATUS, SET_TABLE } from "../types";
 
 const buttonInfos = [
   { color: "blue", text: " start game" },
@@ -51,7 +51,7 @@ const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, t
                     }
                   }
                   dispatch({ type: SET_TABLE, target: target, fake: fake, text: text, color: color, tryCnt: { easy: 4, medium: 6, hard: 9 }[level!] });
-                }, Math.floor(Math.random() * 1000) + 1000);
+                }, 2000);
               }}
               type="button"
               className={`block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out`}

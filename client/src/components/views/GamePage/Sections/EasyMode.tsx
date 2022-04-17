@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Dispatch, FunctionComponent } from "react";
-import { SET_STATUS, SET_TABLE } from "../GamePage";
+import { SET_STATUS, SET_TABLE } from "../types";
 
 interface Props {
   status: string;
@@ -10,14 +10,14 @@ interface Props {
 }
 
 const EasyMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch }) => {
-  const tiles = Array.from({ length: 9 }, (v, i) => i);
+  const tiles = [0, 1, 2, 3];
 
   function onClickTile(idx: number) {
     if (status === "playing") {
       if (target === idx) {
         let nextTarget = -1;
         while (nextTarget === -1 || nextTarget === target) {
-          nextTarget = Math.floor(Math.random() * 9);
+          nextTarget = Math.floor(Math.random() * 4);
         }
 
         dispatch({ type: SET_TABLE, target: nextTarget, tryCnt: tryCnt - 1 });
@@ -33,7 +33,7 @@ const EasyMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch }
 
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-      <div className="grid grid-cols-3 gap-x-0 max-w-md">
+      <div className="grid grid-cols-2 gap-x-0 max-w-md">
         {tiles.map((tile) => {
           return (
             <div key={tile}>
