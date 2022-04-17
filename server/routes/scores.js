@@ -22,4 +22,40 @@ router.post("/registerScore", (req, res) => {
   });
 });
 
+// Hall of Fame 데이터 가져오기
+router.get("/rankers", (req, res) => {
+  rankers = [];
+  Score.find({ level: "easy" })
+    .populate("writer")
+    .sort({ score: 1 })
+    .limit(1)
+    .exec((err, rankerInfo) => {
+      if (err) return res.status(400).json({ success: false, err });
+      rankers.push(rankerInfo);
+
+      Score.find({ level: "medium" })
+        .populate("writer")
+        .sort({ score: 1 })
+        .limit(1)
+        .exec((err, rankerInfo) => {
+          if (err) return res.status(400).json({ success: false, err });
+          rankers.push(rankerInfo);
+
+          Score.find({ level: "hard" })
+            .populate("writer")
+            .sort({ score: 1 })
+            .limit(1)
+            .exec((err, rankerInfo) => {
+              if (err) return res.status(400).json({ success: false, err });
+              rankers.push(rankerInfo);
+
+              return res.status(200).json({
+                success: true,
+                rankers,
+              });
+            });
+        });
+    });
+});
+
 module.exports = router;

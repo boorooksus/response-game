@@ -1,55 +1,76 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const tableHeaders = ["Difficulty", "Ranking", "Name", "Time(ms)"];
 
-const rankers = [
-  { level: "hard", ranking: "1st", name: "user1", time: 1192.2 },
-  { level: "medium", ranking: "1st", name: "user2", time: 1215.6 },
-  { level: "easy", ranking: "1st", name: "user3", time: 2033.8 },
-];
+// const rankers = [
+//   { level: "hard", ranking: "1st", name: "user1", time: 1192.2 },
+//   { level: "medium", ranking: "1st", name: "user2", time: 1215.6 },
+//   { level: "easy", ranking: "1st", name: "user3", time: 2033.8 },
+// ];
 
-const Table = () => {
-  return (
-    <div className="flex flex-col">
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="overflow-hidden">
-            <table className="min-w-full">
-              <thead className="border-b">
-                <tr className="bg-white">
-                  {tableHeaders.map((item) => {
+const Ranking = () => {
+  interface Rankers {
+    [key: string]: string;
+  }
+  interface RankerInfo {
+    [key: string]: string;
+  }
+  const initailRankers = {
+    easy: {},
+  };
+  const [rankers, setRankers] = useState<RankerInfo[][]>([]);
+  useEffect(() => {
+    getRankers();
+  }, []);
+
+  const getRankers = () => {
+    axios.get("/api/scores/rankers").then((response) => {
+      if (response.data.success) {
+        setRankers(response.data.rankers);
+      }
+    });
+  };
+
+  const Table = () => {
+    return (
+      <div className="flex flex-col">
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="overflow-hidden">
+              <table className="min-w-full">
+                <thead className="border-b">
+                  <tr className="bg-white">
+                    {tableHeaders.map((item) => {
+                      return (
+                        <th key={item} scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 ">
+                          {item}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rankers.map((data, i) => {
                     return (
-                      <th key={item} scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 ">
-                        {item}
-                      </th>
+                      <tr className="bg-white border-b" key={i}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data[0].level}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">1st</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data[0].name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data[0].score}</td>
+                      </tr>
                     );
                   })}
-                </tr>
-              </thead>
-              <tbody>
-                {rankers.map((item, i) => {
-                  return (
-                    <tr className="bg-white border-b" key={i}>
-                      {Object.values(item).map((desc) => {
-                        return (
-                          <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900" key={desc}>
-                            {desc}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-const Ranking = () => {
   return (
     <>
       <div className="p-3 text-center bg-gray-100 text-gray-700">
