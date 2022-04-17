@@ -46,7 +46,9 @@ const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, t
                     target = Math.floor(Math.random() * 9);
                     while (fake === -1 || fake === target) {
                       fake = Math.floor(Math.random() * 9);
-                      text = colors[Math.floor(Math.random() * colors.length)];
+                    }
+                    text = colors[Math.floor(Math.random() * colors.length)];
+                    while (color === "" || color === text) {
                       color = colors[Math.floor(Math.random() * colors.length)];
                     }
                   }
