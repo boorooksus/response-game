@@ -2,25 +2,13 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const tableHeaders = ["Difficulty", "Ranking", "Name", "Time(ms)"];
-
-// const rankers = [
-//   { level: "hard", ranking: "1st", name: "user1", time: 1192.2 },
-//   { level: "medium", ranking: "1st", name: "user2", time: 1215.6 },
-//   { level: "easy", ranking: "1st", name: "user3", time: 2033.8 },
-// ];
+const tableHeaders = ["Difficulty", "Ranking", "Name", "Speed(ms/round)", "date"];
 
 const Ranking = () => {
-  interface Rankers {
-    [key: string]: string;
-  }
   interface RankerInfo {
     [key: string]: string;
   }
-  const initailRankers = {
-    easy: {},
-  };
-  const [rankers, setRankers] = useState<RankerInfo[][]>([]);
+  const [rankers, setRankers] = useState<RankerInfo[]>([]);
   useEffect(() => {
     getRankers();
   }, []);
@@ -29,6 +17,9 @@ const Ranking = () => {
     axios.get("/api/scores/rankers").then((response) => {
       if (response.data.success) {
         setRankers(response.data.rankers);
+        // console.log(response.data.rankers[0].createdAt);
+        // let temp = new Date(response.data.rankers[0].createdAt);
+        // console.log(temp.toISOString().split("T")[0] + " " + temp.toTimeString().split(" ")[0]);
       }
     });
   };
@@ -55,10 +46,13 @@ const Ranking = () => {
                   {rankers.map((data, i) => {
                     return (
                       <tr className="bg-white border-b" key={i}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data[0].level}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.level}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">1st</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data[0].name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data[0].score}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.score}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">
+                          {new Date(data.createdAt).toISOString().split("T")[0] + " " + new Date(data.createdAt).toTimeString().split(" ")[0]}
+                        </td>
                       </tr>
                     );
                   })}

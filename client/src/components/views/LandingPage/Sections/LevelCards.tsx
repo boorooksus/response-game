@@ -6,9 +6,9 @@ type LevelInfoType = {
 };
 
 const levelInfos: LevelInfoType[] = [
-  { level: "easy", color: "bg-sky-100" },
-  { level: "medium", color: "bg-green-100" },
-  { level: "hard", color: "bg-red-100" },
+  { level: "easy", color: "hover:bg-sky-100" },
+  { level: "medium", color: "hover:bg-green-100" },
+  { level: "hard", color: "hover:bg-red-100" },
 ];
 
 type CardProps = {
@@ -19,7 +19,7 @@ const Card = (props: CardProps): JSX.Element => {
   return (
     <>
       <a href={`/game/${props.levelInfo.level}`} className="m-5" data-mdb-ripple="true" data-mdb-ripple-color="light">
-        <div className={"aspect-square flex justify-center rounded-xl shadow-lg " + props.levelInfo.color + "  max-w-md "}>
+        <div className={"aspect-square flex justify-center rounded-xl shadow-lg bg-white " + props.levelInfo.color + "  max-w-md "}>
           <h3 className="text-gray-600 text-5xl text-center mb-2 justify-center mt-10">{props.levelInfo.level}</h3>
         </div>
       </a>

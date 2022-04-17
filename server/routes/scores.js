@@ -31,7 +31,7 @@ router.get("/rankers", (req, res) => {
     .limit(1)
     .exec((err, rankerInfo) => {
       if (err) return res.status(400).json({ success: false, err });
-      rankers.push(rankerInfo);
+      rankers.push(rankerInfo[0]);
 
       Score.find({ level: "medium" })
         .populate("writer")
@@ -39,7 +39,7 @@ router.get("/rankers", (req, res) => {
         .limit(1)
         .exec((err, rankerInfo) => {
           if (err) return res.status(400).json({ success: false, err });
-          rankers.push(rankerInfo);
+          rankers.push(rankerInfo[0]);
 
           Score.find({ level: "hard" })
             .populate("writer")
@@ -47,11 +47,60 @@ router.get("/rankers", (req, res) => {
             .limit(1)
             .exec((err, rankerInfo) => {
               if (err) return res.status(400).json({ success: false, err });
-              rankers.push(rankerInfo);
+              rankers.push(rankerInfo[0]);
 
               return res.status(200).json({
                 success: true,
                 rankers,
+              });
+            });
+        });
+    });
+});
+
+router.post("/ranking", (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit) : 20;
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  let postSize = 0;
+
+  ranking = {};
+  Score.find({ level: "easy" })
+    .populate("writer")
+    .sort({ score: 1 })
+    .skip(skip)
+    .limit(limit)
+    .exec((err, rankerInfo1) => {
+      if (err) return res.status(400).json({ success: false, err });
+      // else ranking.push(rankerInfo1);
+      ranking.easy = rankerInfo1;
+      postSize = Math.max(rankerInfo1.length, postSize);
+
+      Score.find({ level: "medium" })
+        .populate("writer")
+        .sort({ score: 1 })
+        .skip(skip)
+        .limit(limit)
+        .exec((err, rankerInfo2) => {
+          if (err) return res.status(400).json({ success: false, err });
+          // else ranking.push(rankerInfo2);
+          ranking.medium = rankerInfo2;
+          postSize = Math.max(rankerInfo2.length, postSize);
+
+          Score.find({ level: "hard" })
+            .populate("writer")
+            .sort({ score: 1 })
+            .skip(skip)
+            .limit(limit)
+            .exec((err, rankerInfo3) => {
+              if (err) return res.status(400).json({ success: false, err });
+              // else ranking.push(rankerInfo3);
+              ranking.hard = rankerInfo3;
+              postSize = Math.max(rankerInfo3.length, postSize);
+
+              return res.status(200).json({
+                success: true,
+                ranking: ranking,
+                postSize: postSize,
               });
             });
         });
