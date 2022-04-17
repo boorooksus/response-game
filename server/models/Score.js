@@ -8,6 +8,9 @@ const productSchema = mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    name: {
+      type: String,
+    },
     level: {
       type: String,
     },

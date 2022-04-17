@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 // 라우팅
 app.use("/api/users", require("./routes/users"));
-app.use("/api/ranking", require("./routes/ranking"));
+app.use("/api/scores", require("./routes/scores"));
 
 // static 이미지 파일을 위한 코드.
 // 이미지 기능 추가가 필요한 경우 수정
