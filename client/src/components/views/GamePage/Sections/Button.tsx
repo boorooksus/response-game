@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useState, useRef, useEffect, Dispatch, FunctionComponent } from "react";
 import { SET_STATUS, SET_TABLE } from "../types";
+import { colors } from "./colors";
 
 const buttonInfos = [
   { color: "blue", text: " start game" },
   { color: "gray", text: "restart" },
 ];
-const colors = ["red", "green", "blue", "yellow", "purple", "pink"];
 
 interface Props {
   status: string;
@@ -47,9 +47,13 @@ const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, t
                     while (fake === -1 || fake === target) {
                       fake = Math.floor(Math.random() * 9);
                     }
-                    text = colors[Math.floor(Math.random() * colors.length)];
-                    while (color === "" || color === text) {
-                      color = colors[Math.floor(Math.random() * colors.length)];
+
+                    const color_keys = Object.keys(colors);
+                    const color_values = Object.values(colors);
+
+                    text = color_keys[Math.floor(Math.random() * color_keys.length)];
+                    while (color === "" || color === colors[text]) {
+                      color = color_values[Math.floor(Math.random() * color_values.length)];
                     }
                   }
                   dispatch({ type: SET_TABLE, target: target, fake: fake, text: text, color: color, tryCnt: { easy: 4, medium: 6, hard: 9 }[level!] });

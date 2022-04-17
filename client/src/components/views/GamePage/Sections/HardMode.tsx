@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Dispatch, FunctionComponent } from "react";
 import { SET_STATUS, SET_TABLE } from "../types";
+import { colors } from "./colors";
 
 interface Props {
   status: string;
@@ -14,7 +15,6 @@ interface Props {
 
 const HardMode: FunctionComponent<Props> = ({ status, target, tryCnt, fake, color, text, dispatch }) => {
   const tiles = Array.from({ length: 9 }, (v, i) => i);
-  const colors = ["red", "green", "blue", "yellow", "purple", "pink"];
 
   function onClickTile(idx: number) {
     if (status === "playing") {
@@ -31,13 +31,12 @@ const HardMode: FunctionComponent<Props> = ({ status, target, tryCnt, fake, colo
           nextFake = Math.floor(Math.random() * 9);
         }
 
-        nextColor = colors[Math.floor(Math.random() * colors.length)];
+        const color_keys = Object.keys(colors);
+        const color_values = Object.values(colors);
 
-        while (true) {
-          nextText = colors[Math.floor(Math.random() * colors.length)];
-          if (nextText !== nextColor) {
-            break;
-          }
+        nextText = color_keys[Math.floor(Math.random() * color_keys.length)];
+        while (nextColor === "" || nextColor === colors[nextText]) {
+          nextColor = color_values[Math.floor(Math.random() * color_values.length)];
         }
 
         dispatch({ type: SET_TABLE, target: nextTarget, fake: nextFake, text: nextText, color: nextColor, tryCnt: tryCnt - 1 });
