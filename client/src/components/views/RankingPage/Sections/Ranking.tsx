@@ -7,6 +7,7 @@ interface rankInfo {
 
 interface Props {
   ranking: rankInfo[];
+  Skip: number;
 }
 
 const Ranking = (props: Props) => {
@@ -34,7 +35,7 @@ const Ranking = (props: Props) => {
                   props.ranking.map((data, i) => {
                     return (
                       <tr className="bg-white border-b" key={i}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{i + 1}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{props.Skip + i + 1}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.score}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">
