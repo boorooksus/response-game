@@ -1,30 +1,31 @@
 import * as React from "react";
-import { useReducer, Reducer, useCallback, useState, useRef, useEffect } from "react";
+import { useReducer, Reducer, useCallback, useState, useRef, useEffect, createContext, useMemo } from "react";
 import Button from "./Sections/Button";
 import { useParams } from "react-router";
 import EasyMode from "./Sections/EasyMode";
 import MediumMode from "./Sections/MediumMode";
 import HardMode from "./Sections/HardMode";
 import { Action } from "redux";
-import { ReducerState, SET_STATUS, SET_TABLE, SET_RESULT, SetStateAction, SetTableAction, SetResultAction, ReducerActions } from "./types";
+import { ReducerState, SET_STATUS, SET_TABLE, SET_RESULT, SetStateAction, SetTableAction, SetResultAction, ReducerActions, Context } from "./types";
 import Board from "./Sections/Board";
+
+export const GameContext = createContext<Context>({
+  status: "ready",
+  target: -1,
+  tryCnt: 6,
+  fake: -1,
+  color: "",
+  text: "",
+  dispatch: () => {},
+});
 
 const initialState: ReducerState = {
   status: "ready",
   target: -1,
   tryCnt: 6,
-  result: [],
   fake: -1,
   color: "",
   text: "",
-};
-
-const setStatus = (status: string): SetStateAction => {
-  return { type: SET_STATUS, status };
-};
-
-const setTable = (target: number, fake: number, text: string, color: string, tryCnt: number): SetTableAction => {
-  return { type: SET_TABLE, target, fake, text, color, tryCnt };
 };
 
 const reducer = (state: ReducerState, action: ReducerActions): ReducerState => {
@@ -78,6 +79,8 @@ const GamePage = () => {
     );
   };
 
+  const value = useMemo(() => ({ status, target, tryCnt, result, fake, color, text, dispatch }), [status, target, tryCnt, result, fake, color, text]);
+
   return (
     <div>
       <h5 className="text-gray-700 text-xl mb-2 leading-tight font-medium ">{level?.toUpperCase()} MODE</h5>
@@ -85,7 +88,9 @@ const GamePage = () => {
 
       <div className="grid grid-cols-2 gap-x-1 sm:grid-cols-1 md:grid-cols-2 max-w-3xl">
         <Game />
-        <Board status={status} tryCnt={tryCnt} result={result} level={level!} target={target} fake={fake} color={color} text={text} dispatch={dispatch} />
+        <GameContext.Provider value={value}>
+          <Board result={result} level={level!} />
+        </GameContext.Provider>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState, useRef, useEffect, Dispatch, FunctionComponent } from "react";
+import { useState, useRef, useEffect, Dispatch, FunctionComponent, useContext } from "react";
+import { GameContext } from "../GamePage";
 import { SET_STATUS, SET_TABLE } from "../types";
 import { colors } from "./colors";
 
@@ -9,17 +10,12 @@ const buttonInfos = [
 ];
 
 interface Props {
-  status: string;
-  target: number;
-  fake: number;
-  color: string;
-  text: string;
-  dispatch: Dispatch<any>;
-  tryCnt: number;
   level: string;
 }
 
-const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, tryCnt, dispatch, level }) => {
+const Button: FunctionComponent<Props> = ({ level }) => {
+  const { status, target, fake, color, text, tryCnt, dispatch } = useContext(GameContext);
+
   const timeout = useRef<number | null>(null);
 
   return (
@@ -31,7 +27,7 @@ const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, t
               onClick={() => {
                 dispatch({ type: SET_STATUS, status: "playing" });
 
-                dispatch({ type: SET_TABLE, target: -1, fake: -1, text: "", color: "", tryCnt: { easy: 4, medium: 6, hard: 9 }[level!] });
+                dispatch({ type: SET_TABLE, target: -1, fake: -1, text: "", color: "", tryCnt: { easy: 4, medium: 6, hard: 9 }[level!]! });
 
                 timeout.current = window.setTimeout(() => {
                   let target = -1,
@@ -56,7 +52,7 @@ const Button: FunctionComponent<Props> = ({ status, target, fake, color, text, t
                       color = color_values[Math.floor(Math.random() * color_values.length)];
                     }
                   }
-                  dispatch({ type: SET_TABLE, target: target, fake: fake, text: text, color: color, tryCnt: { easy: 4, medium: 6, hard: 9 }[level!] });
+                  dispatch({ type: SET_TABLE, target: target, fake: fake, text: text, color: color, tryCnt: { easy: 4, medium: 6, hard: 9 }[level!]! });
                 }, 2000);
               }}
               type="button"
