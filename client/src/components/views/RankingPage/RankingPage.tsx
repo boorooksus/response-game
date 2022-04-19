@@ -39,21 +39,25 @@ const RankingPage = () => {
 
   return (
     <>
+      {/* 쉬움 난이도 */}
       <div className="text-center text-gray-700 rounded-xl shadow-lg bg-white mb-4">
         <h2 className=" text-2xl mb-4 pt-4">Easy Mode Ranking</h2>
         <div>{easyRanking && <Ranking ranking={easyRanking} Skip={Skip} />}</div>
       </div>
 
+      {/* 보통 난이도 */}
       <div className="text-center text-gray-700 rounded-xl shadow-lg bg-white mb-4">
         <h2 className=" text-2xl mb-4 pt-4">Medium Mode Ranking</h2>
         <div>{mediumRanking && <Ranking ranking={mediumRanking} Skip={Skip} />}</div>
       </div>
 
+      {/* 어려움 난이도 */}
       <div className="text-center text-gray-700 rounded-xl shadow-lg bg-white mb-4">
         <h2 className=" text-2xl mb-4 pt-4">Hard Mode Ranking</h2>
         <Ranking ranking={hardRanking} Skip={Skip} />
       </div>
 
+      {/* 페이지 이동 버튼 */}
       <div className="flex items-center justify-center">
         <div className="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
           <button

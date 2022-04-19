@@ -38,9 +38,7 @@ const Ranking = (props: Props) => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{props.Skip + i + 1}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.score}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">
-                          {new Date(data.createdAt).toISOString().split("T")[0] + " " + new Date(data.createdAt).toTimeString().split(" ")[0]}
-                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{new Date(data.createdAt).toISOString().split("T")[0]}</td>
                       </tr>
                     );
                   })}
