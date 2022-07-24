@@ -9,7 +9,7 @@
 
 ### 1-2. 기술 스택
 
-- 프론트엔드: React, TypeScript, Tailwind CSS
+- 프론트엔드: React, TypeScript, TailwindCSS
 - 백엔드: Node.js, MongoDB
   <br><br>
 

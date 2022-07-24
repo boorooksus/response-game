@@ -1,21 +1,16 @@
 import * as React from "react";
-import { Dispatch, FunctionComponent, useState, useEffect } from "react";
+import { Dispatch, FunctionComponent, useState, useEffect, useContext } from "react";
 import Button from "./Button";
 import axios from "axios";
+import { GameContext } from "../GamePage";
 
 interface Props {
-  status: string;
-  tryCnt: number;
   level: string;
   result: number;
-  target: number;
-  fake: number;
-  color: string;
-  text: string;
-  dispatch: Dispatch<any>;
 }
 
-const Board: FunctionComponent<Props> = ({ status, tryCnt, level, result, target, fake, color, text, dispatch }) => {
+const Board: FunctionComponent<Props> = ({ level, result }) => {
+  const { status, target, fake, color, text, tryCnt, dispatch } = useContext(GameContext);
   const [name, setName] = useState("");
   const [isRegisterd, setIsRegistered] = useState(false);
 
@@ -59,7 +54,7 @@ const Board: FunctionComponent<Props> = ({ status, tryCnt, level, result, target
         }
       </h5>
       <br></br>
-      <Button status={status} target={target} fake={fake} color={color} text={text} tryCnt={tryCnt} dispatch={dispatch} level={level!} />
+      <Button level={level!} />
       <br></br>
       {
         {
