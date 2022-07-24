@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dispatch, FunctionComponent, useState, useEffect, useContext } from "react";
+import { Dispatch, FunctionComponent, useState, useEffect, useContext, FC, PropsWithChildren } from "react";
 import Button from "./Button";
 import axios from "axios";
 import { GameContext } from "../GamePage";
@@ -9,7 +9,7 @@ interface Props {
   result: number;
 }
 
-const Board: FunctionComponent<Props> = ({ level, result }) => {
+const Board: FC<PropsWithChildren<Props>> = ({ children, level, result }) => {
   const { status, target, fake, color, text, tryCnt, dispatch } = useContext(GameContext);
   const [name, setName] = useState("");
   const [isRegisterd, setIsRegistered] = useState(false);
@@ -93,7 +93,10 @@ const Board: FunctionComponent<Props> = ({ level, result }) => {
                           value={name}
                           onChange={onNameHandler}
                         />
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                          type="submit"
+                        >
                           Register
                         </button>
                       </div>

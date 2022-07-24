@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../../_actions/user_actions";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -45,14 +44,14 @@ const RegisterPage = () => {
       name: Name,
     };
 
-    // redux 이용하므로 axios로 데이터 보낼 필요x
-    dispatch(registerUser(dataToSubmit)).payload.then((response) => {
-      if (response.payload.success) {
-        navigate("/login");
-      } else {
-        alert("Failed to sign up");
-      }
-    });
+    // // redux 이용하므로 axios로 데이터 보낼 필요x
+    // dispatch(registerUser(dataToSubmit)).payload.then((response) => {
+    //   if (response.payload.success) {
+    //     navigate("/login");
+    //   } else {
+    //     alert("Failed to sign up");
+    //   }
+    // });
 
     // const request = axios.post("/api/users/register", body).then((response) => {
     //   console.log(response.data);
@@ -131,7 +130,10 @@ const RegisterPage = () => {
           {/* 비밀번호 확인 */}
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="confirmPassword">
+              <label
+                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                htmlFor="confirmPassword"
+              >
                 Confirm Password
               </label>
             </div>
@@ -149,7 +151,10 @@ const RegisterPage = () => {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
                 Register
               </button>
             </div>
