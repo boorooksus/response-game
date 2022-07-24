@@ -121,25 +121,25 @@ $ cd install
 ## Directory Structure
 
     response-game
-    ├── client                            # front-end
+    ├── client/                           # front-end
     │   ├── public/                       # static files
     │   │   └── index.html                # html template
     │   │
-    │   ├── src/                          # project root
-    │   │   ├── components/               # application components
-    │   │   │   ├── views/                # application views
-    │   │   │   │   ├── GamePage/         # images, icons, etc.
-    │   │   │   │   │   ├── sections/     # components for the page
-    │   │   │   │   │   ├── GamePage.tsx  # view for game page
-    │   │   │   │   │   └── types.tsx     # types for typescript
-    │   │   │   │   └── ...
-    │   │   │   └── App.tsx
-    │   │   ├── index.css                 # common style css
-    │   │   ├── index.tsx
-    │   │   ├── ...
-    │   │   └── setupProxy.js             # proxy setting
-    │   │                                 # for local server
-    │   │
+    │   └── src/                          # project root
+    │       ├── components/               # application components
+    │       │   ├── views/                # application views
+    │       │   │   ├── GamePage/         # images, icons, etc.
+    │       │   │   │   ├── sections/     # components for the page
+    │       │   │   │   ├── GamePage.tsx  # view for game page
+    │       │   │   │   └── types.tsx     # types for typescript
+    │       │   │   └── ...
+    │       │    App.tsx
+    │       ├── index.css                 # common style css
+    │       ├── index.tsx
+    │       ├── ...
+    │       └── setupProxy.js             # proxy setting
+    │                                     # for local server
+    │
     ├── server/                           # back-end
     │   ├── config/                       # mongoDB key
     │   ├── middleware/                   # custom middlewares
