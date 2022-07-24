@@ -120,7 +120,7 @@ $ cd install
 
 ## Directory Structure
 
-    response-game
+    response-game/
     ├── client/                           # front-end
     │   ├── public/                       # static files
     │   │   └── index.html                # html template
@@ -137,8 +137,8 @@ $ cd install
     │       ├── index.css                 # common style css
     │       ├── index.tsx
     │       ├── ...
-    │       └── setupProxy.js             # proxy setting
-    │                                     # for local server
+    │       └── setupProxy.js             # proxy settings
+    │                                     #   for local server
     │
     ├── server/                           # back-end
     │   ├── config/                       # mongoDB key
