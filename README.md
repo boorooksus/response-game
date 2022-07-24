@@ -133,7 +133,7 @@ $ cd install
     │       │   │   │   ├── GamePage.tsx  # view for game page
     │       │   │   │   └── types.tsx     # types for typescript
     │       │   │   └── ...
-    │       │    App.tsx
+    │       │   └── App.tsx
     │       ├── index.css                 # common style css
     │       ├── index.tsx
     │       ├── ...
