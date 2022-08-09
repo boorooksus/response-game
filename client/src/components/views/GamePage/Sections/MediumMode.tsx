@@ -33,6 +33,7 @@ const MediumMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch
 
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      {/* 9x9 게임판 */}
       <div className="grid grid-cols-3 gap-x-0 max-w-md">
         {tiles.map((tile) => {
           return (

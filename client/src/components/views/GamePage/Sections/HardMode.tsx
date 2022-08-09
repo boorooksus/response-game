@@ -39,7 +39,14 @@ const HardMode: FunctionComponent<Props> = ({ status, target, tryCnt, fake, colo
           nextColor = color_values[Math.floor(Math.random() * color_values.length)];
         }
 
-        dispatch({ type: SET_TABLE, target: nextTarget, fake: nextFake, text: nextText, color: nextColor, tryCnt: tryCnt - 1 });
+        dispatch({
+          type: SET_TABLE,
+          target: nextTarget,
+          fake: nextFake,
+          text: nextText,
+          color: nextColor,
+          tryCnt: tryCnt - 1,
+        });
 
         if (tryCnt === 0) {
           dispatch({ type: SET_STATUS, status: "success" });
@@ -53,6 +60,7 @@ const HardMode: FunctionComponent<Props> = ({ status, target, tryCnt, fake, colo
 
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm text-center">
+      {/* 제시 색상과 텍스트 */}
       {text && color ? (
         <h3 className="text-5xl m-2" style={{ color }}>
           {text.toUpperCase()}
@@ -60,13 +68,16 @@ const HardMode: FunctionComponent<Props> = ({ status, target, tryCnt, fake, colo
       ) : (
         <h3 className="text-5xl m-2 text-white">-</h3>
       )}
+      {/* 9x9 게임판 */}
       <div className="grid grid-cols-3 gap-x-0 max-w-md">
         {tiles.map((tile) => {
           return (
             <div key={tile}>
               {
                 {
-                  ready: <div className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"></div>,
+                  ready: (
+                    <div className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"></div>
+                  ),
                   playing:
                     target === tile ? (
                       <div
@@ -95,8 +106,12 @@ const HardMode: FunctionComponent<Props> = ({ status, target, tryCnt, fake, colo
                         }}
                       ></div>
                     ),
-                  success: <div className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2 "></div>,
-                  fail: <div className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"></div>,
+                  success: (
+                    <div className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2 "></div>
+                  ),
+                  fail: (
+                    <div className="aspect-square flex justify-center max-w-md bg-gray-200 border-solid border-2"></div>
+                  ),
                 }[status]
               }
             </div>

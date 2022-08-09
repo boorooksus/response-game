@@ -5,8 +5,9 @@ import LevelCards from "./Sections/LevelCards";
 const LandingPage = () => {
   return (
     <>
+      {/* 명예의 전당 */}
       <Ranking />
-      <br></br>
+      {/* 게임 난이도 선택 */}
       <LevelCards />
     </>
   );

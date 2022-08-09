@@ -17,13 +17,11 @@ const Ranking = () => {
     axios.get("/api/scores/rankers").then((response) => {
       if (response.data.success) {
         setRankers(response.data.rankers);
-        // console.log(response.data.rankers[0].createdAt);
-        // let temp = new Date(response.data.rankers[0].createdAt);
-        // console.log(temp.toISOString().split("T")[0] + " " + temp.toTimeString().split(" ")[0]);
       }
     });
   };
 
+  // 명예의 전당 테이블
   const Table = () => {
     return (
       <div className="flex flex-col">
@@ -51,7 +49,9 @@ const Ranking = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.score}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">
-                          {new Date(data.createdAt).toISOString().split("T")[0] + " " + new Date(data.createdAt).toTimeString().split(" ")[0]}
+                          {new Date(data.createdAt).toISOString().split("T")[0] +
+                            " " +
+                            new Date(data.createdAt).toTimeString().split(" ")[0]}
                         </td>
                       </tr>
                     );
@@ -69,15 +69,15 @@ const Ranking = () => {
     <>
       <div className="p-3 text-center bg-gray-100 text-gray-700">
         <h2 className=" text-3xl mb-4">Hall of Fame</h2>
+        {/* 명예의 전당 테이블 */}
         <Table />
-        <button
-          type="button"
+        {/* 랭킹 페이지 이동 */}
+        <a
+          href="/ranking"
           className="inline-block px-6 py-2.5  bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-          data-mdb-ripple="true"
-          data-mdb-ripple-color="light"
         >
-          <a href="/ranking">more ranking</a>
-        </button>
+          more ranking
+        </a>
       </div>
     </>
   );

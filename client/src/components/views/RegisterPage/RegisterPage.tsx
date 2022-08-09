@@ -3,12 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
 const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Name, setName] = useState("");
@@ -43,20 +38,6 @@ const RegisterPage = () => {
       password: Password,
       name: Name,
     };
-
-    // // redux 이용하므로 axios로 데이터 보낼 필요x
-    // dispatch(registerUser(dataToSubmit)).payload.then((response) => {
-    //   if (response.payload.success) {
-    //     navigate("/login");
-    //   } else {
-    //     alert("Failed to sign up");
-    //   }
-    // });
-
-    // const request = axios.post("/api/users/register", body).then((response) => {
-    //   console.log(response.data);
-    //   return response.data;
-    // });
   };
 
   return (
@@ -75,7 +56,6 @@ const RegisterPage = () => {
               <h3 className="text-xl text-gray-600 font-bold">Sign up</h3>
             </div>
           </div>
-          <br></br>
           {/* 이메일 */}
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
