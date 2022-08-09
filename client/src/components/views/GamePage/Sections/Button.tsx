@@ -1,25 +1,21 @@
 import * as React from "react";
-import { useState, useRef, useEffect, Dispatch, FunctionComponent, useContext } from "react";
+import { useRef, FunctionComponent, useContext } from "react";
 import { GameContext } from "../GamePage";
 import { SET_STATUS, SET_TABLE } from "../types";
 import { colors } from "./colors";
-
-const buttonInfos = [
-  { color: "blue", text: " start game" },
-  { color: "gray", text: "restart" },
-];
 
 interface Props {
   level: string;
 }
 
 const Button: FunctionComponent<Props> = ({ level }) => {
-  const { status, target, fake, color, text, tryCnt, dispatch } = useContext(GameContext);
+  const { status, dispatch } = useContext(GameContext);
 
   const timeout = useRef<number | null>(null);
 
   return (
     <div>
+      {/* Start/Stop/Reset Button */}
       {
         {
           ready: (
@@ -27,8 +23,16 @@ const Button: FunctionComponent<Props> = ({ level }) => {
               onClick={() => {
                 dispatch({ type: SET_STATUS, status: "playing" });
 
-                dispatch({ type: SET_TABLE, target: -1, fake: -1, text: "", color: "", tryCnt: { easy: 4, medium: 6, hard: 9 }[level!]! });
+                dispatch({
+                  type: SET_TABLE,
+                  target: -1,
+                  fake: -1,
+                  text: "",
+                  color: "",
+                  tryCnt: { easy: 4, medium: 6, hard: 9 }[level!]!,
+                });
 
+                // 시작 버튼 누른 후, 일정 시간 지나고 목표 제시
                 timeout.current = window.setTimeout(() => {
                   let target = -1,
                     fake = -1,
@@ -52,8 +56,15 @@ const Button: FunctionComponent<Props> = ({ level }) => {
                       color = color_values[Math.floor(Math.random() * color_values.length)];
                     }
                   }
-                  dispatch({ type: SET_TABLE, target: target, fake: fake, text: text, color: color, tryCnt: { easy: 4, medium: 6, hard: 9 }[level!]! });
-                }, 2000);
+                  dispatch({
+                    type: SET_TABLE,
+                    target: target,
+                    fake: fake,
+                    text: text,
+                    color: color,
+                    tryCnt: { easy: 4, medium: 6, hard: 9 }[level!]!,
+                  });
+                }, 800);
               }}
               type="button"
               className={`block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out`}

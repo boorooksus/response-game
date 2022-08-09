@@ -28,11 +28,6 @@ const RankingPage = () => {
         setEasyRanking([...response.data.ranking.easy]);
         setMediumRanking([...response.data.ranking.medium]);
         setHardRanking([...response.data.ranking.hard]);
-
-        // console.log(response.data.ranking.medium);
-
-        // let temp = new Date(response.data.rankers[0].createdAt);
-        // console.log(temp.toISOString().split("T")[0] + " " + temp.toTimeString().split(" ")[0]);
       }
     });
   };
@@ -72,7 +67,8 @@ const RankingPage = () => {
           <button
             type="button"
             onClick={() => {
-              (easyRanking.length == Limit || mediumRanking.length == Limit || hardRanking.length == Limit) && setSkip(Skip + Limit);
+              (easyRanking.length == Limit || mediumRanking.length == Limit || hardRanking.length == Limit) &&
+                setSkip(Skip + Limit);
             }}
             className=" rounded-r inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out"
           >

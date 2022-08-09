@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 interface rankInfo {
   [key: string]: string;
@@ -18,6 +17,7 @@ const Ranking = (props: Props) => {
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden">
+            {/* 랭킹 테이블 */}
             <table className="min-w-full">
               <thead className="border-b">
                 <tr className="bg-white">
@@ -38,7 +38,9 @@ const Ranking = (props: Props) => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{props.Skip + i + 1}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{data.score}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">{new Date(data.createdAt).toISOString().split("T")[0]}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">
+                          {new Date(data.createdAt).toISOString().split("T")[0]}
+                        </td>
                       </tr>
                     );
                   })}

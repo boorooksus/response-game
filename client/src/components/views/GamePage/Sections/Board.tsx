@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dispatch, FunctionComponent, useState, useEffect, useContext, FC, PropsWithChildren } from "react";
+import { useState, useEffect, useContext, FC, PropsWithChildren } from "react";
 import Button from "./Button";
 import axios from "axios";
 import { GameContext } from "../GamePage";
@@ -9,8 +9,8 @@ interface Props {
   result: number;
 }
 
-const Board: FC<PropsWithChildren<Props>> = ({ children, level, result }) => {
-  const { status, target, fake, color, text, tryCnt, dispatch } = useContext(GameContext);
+const Board: FC<PropsWithChildren<Props>> = ({ level, result }) => {
+  const { status, tryCnt } = useContext(GameContext);
   const [name, setName] = useState("");
   const [isRegisterd, setIsRegistered] = useState(false);
 
@@ -43,8 +43,9 @@ const Board: FC<PropsWithChildren<Props>> = ({ children, level, result }) => {
   };
 
   return (
-    <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-      <h5 className="text-gray-700 text-xl mb-2">
+    <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm ">
+      {/* 게임 설명 */}
+      <p className="text-gray-700 text-xl mb-5">
         {
           {
             easy: "색깔이 있는 타일을 클릭하세요",
@@ -52,26 +53,23 @@ const Board: FC<PropsWithChildren<Props>> = ({ children, level, result }) => {
             hard: "제시된 색상의 타일을 클릭하세요",
           }[level!]
         }
-      </h5>
-      <br></br>
+      </p>
+      {/* Start/Stop/Reset Button */}
       <Button level={level!} />
-      <br></br>
+      {/* Show Game Information */}
       {
         {
           ready: <div></div>,
           playing: (
             <div>
               <h5 className="text-gray-500 text-2xl mb-2">count: {tryCnt + 1}</h5>
-              <br></br>
             </div>
           ),
           success: (
             <div>
               <h5 className="text-green-500 text-3xl mb-2">SUCCESS!</h5>
-              <br></br>
               <h5 className="text-gray-700 text-2xl mb-2">Time: </h5>
               <h5 className="text-gray-700 text-3xl mb-2">{result} ms</h5>
-              <br />
               <div>
                 {isRegisterd ? (
                   <div>

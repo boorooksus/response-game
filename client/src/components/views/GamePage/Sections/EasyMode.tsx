@@ -33,6 +33,7 @@ const EasyMode: FunctionComponent<Props> = ({ status, target, tryCnt, dispatch }
 
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      {/* 4x4 게임판 */}
       <div className="grid grid-cols-2 gap-x-0 max-w-md">
         {tiles.map((tile) => {
           return (
